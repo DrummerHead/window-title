@@ -85,9 +85,6 @@ gulp.task('build-js', () => browserifyBabelify({ watch: false }));
 gulp.task('watch-js', () => browserifyBabelify());
 
 
-
-
-
 function lint(files, options) {
   return gulp.src(files)
     .pipe(reload({stream: true, once: true}))
@@ -108,6 +105,12 @@ gulp.task('lint:test', () => {
     }
   })
     .pipe(gulp.dest('test/spec/**/*.js'));
+});
+
+gulp.task('minify-js', ['build-js'], () => {
+  return gulp.src('.tmp/scripts/main.js', {base: '.tmp'})
+    .pipe($.uglify())
+    .pipe(gulp.dest('dist'))
 });
 
 gulp.task('html', ['styles'], () => {
@@ -215,7 +218,7 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'build-js', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['lint', 'html', 'minify-js', 'images', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
