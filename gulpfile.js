@@ -121,6 +121,20 @@ gulp.task('html', ['styles'], () => {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('inline', ['html'], () => {
+  return gulp.src('./dist/index.html')
+    .pipe($.inlineSource())
+    .pipe(gulp.dest('dist'))
+});
+
+gulp.task('delete-inlined', ['inline'], del.bind(null, ['./dist/styles', './dist/scripts']));
+
+gulp.task('add-html-comment', ['inline'], () => {
+  return gulp.src('./dist/index.html')
+    .pipe($.replace(/<html> ?/, '<html>\n\n<!-- Source code at http://github.com/DrummerHead/welcome-window -->\n\n'))
+    .pipe(gulp.dest('dist'))
+});
+
 gulp.task('images', () => {
   return gulp.src('app/images/**/*')
     .pipe($.cache($.imagemin({
@@ -218,7 +232,7 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'minify-js', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['lint', 'html', 'minify-js', 'delete-inlined', 'add-html-comment', 'images', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
