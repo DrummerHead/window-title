@@ -97,11 +97,9 @@ function lint(files, options) {
 }
 
 gulp.task('lint', () => {
-  return lint('app/scripts/**/*.js', {
-    fix: true
-  })
-    .pipe(gulp.dest('app/scripts'));
+  return lint('app/scripts/**/*.js')
 });
+
 gulp.task('lint:test', () => {
   return lint('test/spec/**/*.js', {
     fix: true,
