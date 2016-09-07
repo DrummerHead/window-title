@@ -1,0 +1,38 @@
+// bower:scss
+// endbower
+
+html {
+  font-size: 1em;
+  font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
+  width: 100vw;
+  background-color: yellow;
+}
+
+#window-input {
+  height: 90vh;
+  width: 90vw;
+  margin: auto;
+  font-size: 4em;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  font-weight: 200;
+  text-transform: capitalize;
+}
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
